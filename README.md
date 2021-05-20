@@ -53,6 +53,10 @@ The following inputs can be configured in an inputs ".yml" file for the profile 
 
 ```yaml
 s3_name: '<name of s3 bucket>'
+s3_public: <bool>
+s3_versioning: <bool>
+s3_default_encryption: <bool>
+s3_access_logging: <bool>
 ```
 
 # Running This Baseline from Github
