@@ -15,3 +15,23 @@ inputs:
   - name: s3_name
     description: Name of the s3 bucket to query
     type: String
+
+  - name: s3_public
+    description: Is the s3 bucket exposed to the public
+    type: Boolean
+    value: true
+
+  - name: s3_versioning
+    description: Is the s3 bucket versioning enabled
+    type: Boolean
+    value: true
+
+  - name: s3_default_encryption
+    description: Is the s3 bucket default encryption enabled
+    type: Boolean
+    value: true
+
+  - name: s3_access_logging
+    description: Is the s3 bucket access logging enabled
+    type: Boolean
+    value: true
