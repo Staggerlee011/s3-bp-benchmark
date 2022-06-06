@@ -1,1 +1,10 @@
 inspec.lock
+
+# Default output files have "AWS_S3_" prefix
+AWS_S3_*
+
+# Use .envrc for local runs
+.envrc
+
+# Keep inputs for private runs private
+inputs-local.yml

@@ -1,0 +1,59 @@
+name: Scan S3 Bucket
+on: [push, workflow_dispatch]
+
+env:
+  HAVE_AWSREGION: ${{ secrets.AWSREGION != '' }}
+  HAVE_AWSROLE: ${{ secrets.AWSROLE != '' }}
+  HAVE_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME != '' }}
+
+jobs:
+  check:
+    name: 'Scan Pre-Checks'
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.secret.conclusion }}
+    steps:
+    - id: secret
+      name: Secrets Check
+      if: ${{ env.HAVE_AWSROLE == 'true' && env.HAVE_AWSREGION == 'true' && env.HAVE_BUCKET_NAME == 'true' }}
+      run: /usr/bin/true
+
+  build_tools:
+    name: 'Scan and Generate Report'
+    runs-on: ubuntu-latest
+    needs: check
+    if: needs.check.outputs.status == 'success'
+    steps:
+    - name: Check out checklist code
+      uses: actions/checkout@v2
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ secrets.AWSROLE }}
+        aws-region: ${{ secrets.AWSREGION }}
+    - name: Create Benchmark Input File
+      run: |
+        echo "s3_name: '${{ secrets.S3_BUCKET_NAME }}'" > in.yml
+    - name: Execute Scan
+      env:
+        BENCHMARK_INPUT_FILE: "in.yml"
+      run: make scan
+    - name: Create Benchmark and Checklist
+      run: make benchmark checklist
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: checklist
+        path: |
+          AWS_S3_1.0_BENCHMARK.ckl
+          AWS_S3_1.0_BENCHMARK.xml
+          AWS_S3_1.0_BENCHMARK.json
+    - name: Publish Release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      if: github.ref == 'refs/heads/main'
+      with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "latest"
+          files: AWS_S3_1.0_BENCHMARK.ckl
+

@@ -5,13 +5,15 @@ CKL_FILENAME=AWS_S3_1.0_BENCHMARK
 
 BENCHMARK_INPUT_FILE ?= inputs.yml
 
-all: benchmark checklist
+all: benchmark checklist scan
 
 benchmark: $(CKL_FILENAME).xml
 
 checklist: $(CKL_FILENAME).ckl
 
-.PHONY: all benchmark checklist
+scan: $(CKL_FILENAME).json
+
+.PHONY: all benchmark checklist scan
 
 $(CKL_FILENAME).xml: attributes.yml $(CKL_FILENAME).json
 	$(INSPEC_TOOLS_CMD) inspec2xccdf -j $(CKL_FILENAME).json -a attributes.yml -o $(CKL_FILENAME).xml
