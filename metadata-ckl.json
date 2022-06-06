@@ -1,0 +1,8 @@
+{
+  "stigid" : "aws_bp_baseline",
+  "benchmark" : {
+    "title" : "AWS S3 Best Practices Baseline",
+    "plaintext" : "Release: 1, Benchmark Date: 06 Jun 2022",
+    "version" : "1"
+  }
+}
