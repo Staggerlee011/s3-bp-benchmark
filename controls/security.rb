@@ -15,14 +15,8 @@ control 'not_public' do
   tag nist: ['CM-6']
   tag severity: 'medium'
   title 'The S3 bucket should not be public'
-  if input('s3_public')
-    describe aws_s3_bucket(bucket_name: input('s3_name')) do
-        it { should_not be_public }
-    end
-  else
-    describe "This requirement is skipped at the choice of the user." do
-      skip "This requirement is skipped at the choice of the user."
-    end
+  describe aws_s3_bucket(bucket_name: input('s3_name')) do
+    it { should_not be_public }
   end
 end
 
@@ -31,14 +25,8 @@ control 'versioning' do
   tag nist: ['CM-6']
   tag severity: 'medium'
   title 'enabled'
-  if input('s3_versioning')
-    describe aws_s3_bucket(bucket_name: input('s3_name')) do
-        it { should have_versioning_enabled }
-    end
-  else
-    describe 'This bucket does not require versioning' do
-	    skip 'This bucket does not require versioning'
-    end
+  describe aws_s3_bucket(bucket_name: input('s3_name')) do
+    it { should have_versioning_enabled }
   end
 end
 
@@ -47,15 +35,9 @@ control 'default_encryption' do
   tag nist: ['CM-6']
   tag severity: 'medium'
   title 'enabled'
-  if input('s3_default_encryption')
-    describe aws_s3_bucket(bucket_name: input('s3_name')) do
-        it { should have_default_encryption_enabled }
-	  end
-  else
-    describe 'This bucket does not require default encryption' do
-	    skip 'This bucket does not require default encryption'
-    end
-  end
+  describe aws_s3_bucket(bucket_name: input('s3_name')) do
+    it { should have_default_encryption_enabled }
+	end
 end
 
 control 'access_logging' do
@@ -63,13 +45,17 @@ control 'access_logging' do
   tag nist: ['CM-6']
   tag severity: 'medium'
   title 'enabled'
-  if input('s3_access_logging')
-    describe aws_s3_bucket(bucket_name: input('s3_name')) do
-        it { should have_access_logging_enabled }
-    end
-  else
-    describe 'This bucket does not require access logging' do
-        skip 'This bucket does not require access logging'
-     end
+  describe aws_s3_bucket(bucket_name: input('s3_name')) do
+    it { should have_access_logging_enabled }
+  end
+end
+
+control 'secure_transport' do
+  impact 0.5
+  tag nist: ['CM-6']
+  tag severity: 'medium'
+  title 'enabled'
+  describe aws_s3_bucket(bucket_name: input('s3_name')) do
+    it { should have_secure_transport_enabled }
   end
 end
