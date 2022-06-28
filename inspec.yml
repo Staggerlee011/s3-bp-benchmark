@@ -1,4 +1,6 @@
 name: rds-bp-benchmark
+copyright: Staggerlee011, 2021
+license: Apache-2.0
 summary: An InSpec Compliance Profile for AWS RDS best practices
 version: 0.1.0
 inspec_version: '~> 4'
