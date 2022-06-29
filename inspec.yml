@@ -1,7 +1,7 @@
-name: rds-bp-benchmark
+name: s3-bp-benchmark
 copyright: Staggerlee011, 2021
 license: Apache-2.0
-summary: An InSpec Compliance Profile for AWS RDS best practices
+summary: An InSpec Compliance Profile for AWS S3 Best Practices
 version: 0.1.0
 inspec_version: '~> 4'
 
@@ -18,8 +18,8 @@ inputs:
     description: Name of the s3 bucket to query
     type: String
 
-  - name: s3_public
-    description: Is the s3 bucket exposed to the public
+  - name: s3_not_public
+    description: Is public access blocked to the s3 bucket
     type: Boolean
     value: true
 
@@ -35,5 +35,10 @@ inputs:
 
   - name: s3_access_logging
     description: Is the s3 bucket access logging enabled
+    type: Boolean
+    value: true
+    
+  - name: s3_secure_transport
+    description: Is only secure traffic allowed for the s3 bucket
     type: Boolean
     value: true

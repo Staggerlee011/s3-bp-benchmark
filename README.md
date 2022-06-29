@@ -1,6 +1,6 @@
 # aws-s3-best-practices-baseline
 
-InSpec profile to validate the secure configuration of your AWS s3 bucket via inspec. The validation is based genreally off the AWS guidance found here: [<https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html>](https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html)
+InSpec profile to validate the secure configuration of your AWS s3 bucket via inspec. The validation is based genreally off the AWS guidance found here: [<https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html>](https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html)
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ The latest versions and installation options are available at the [InSpec](http:
 
 ## Requirements
 
-In order to run the profile, you must install the following on the system you will be running inspec from so that the aws resources are able to connect and use the `aws api` to validate your RDS environment. Lastly, the IAM account used to run this profile against the AWS environment needs to be attached through a group or role with at least AWS IAM `ReadOnlyAccess` Managed Policy.
+In order to run the profile, you must install the following on the system you will be running inspec from so that the aws resources are able to connect and use the `aws api` to validate your S3 buckets. Lastly, the IAM account used to run this profile against the AWS environment needs to be attached through a group or role with at least AWS IAM `ReadOnlyAccess` Managed Policy.
 
 - AWS CLI installed and configured
 - InSpec in your path
